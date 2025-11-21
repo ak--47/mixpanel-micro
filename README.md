@@ -22,8 +22,10 @@ But sometimes you can't use an official SDK because:
 ## Quick Start
 
 ```bash
-# Download the script
-curl -O https://raw.githubusercontent.com/ak--47/mixpanel-micro/main/mixpanel-micro.sh
+# download the script
+curl -O https://raw.githubusercontent.com/ak--47/mixpanel-micro/refs/heads/main/mixpanel-micro.sh
+
+# allow it to run
 chmod +x mixpanel-micro.sh
 
 # Send your first event
@@ -37,6 +39,11 @@ That's it.
 ```bash
 ./mixpanel-micro.sh <TOKEN> <EVENT> [PROPERTIES] [DISTINCT_ID] [FLAGS]
 ```
+
+### Flags
+
+- `--verbose` - Show the payload and API response
+- `--dry-run` - Print payload without sending request (implies --verbose)
 
 ### Examples
 
@@ -56,11 +63,6 @@ That's it.
 # Test without sending
 ./mixpanel-micro.sh "YOUR_TOKEN" "Test" '{"foo": "bar"}' "test_user" --dry-run
 ```
-
-### Flags
-
-- `--verbose` - Show the payload and API response
-- `--dry-run` - Print payload without sending request (implies --verbose)
 
 ---
 
@@ -239,10 +241,6 @@ TEMP=$(vcgencmd measure_temp | grep -o '[0-9.]*')
   "{\"temp_c\": $TEMP, \"device\": \"$DEVICE_ID\"}" "$DEVICE_ID"
 ```
 
-**Add to crontab:**
-```bash
-*/5 * * * * /home/pi/sensor.sh  # Every 5 minutes
-```
 
 ### Vercel/Netlify Edge Functions
 
@@ -751,19 +749,6 @@ while True:
     time.sleep(300)  # Every 5 minutes
 ```
 
-### A/B Test Tracking in Legacy Systems
-
-```php
-<?php
-// legacy_app.php - Running on PHP 5.3, can't upgrade
-$variant = $_COOKIE['ab_test_variant'] ?? 'control';
-
-track("Page View", [
-    "page" => $_SERVER['REQUEST_URI'],
-    "variant" => $variant,
-    "session_id" => session_id()
-]);
-```
 
 ### Error Monitoring
 
